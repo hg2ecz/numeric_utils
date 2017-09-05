@@ -16,7 +16,7 @@ float half2float(const void *f16) {
     return *f32float;
 }
 
-void float2half(void *f16, const void *f32) {
+void float2half(void *f16, const float *f32) {
     unsigned int f32bin = *((const unsigned int *)f32);
     unsigned short *outshort = (unsigned short *)f16;
     unsigned short f16bin = ((f32bin >> 16) & 0x8000) | (((f32bin - ((127-15) << 23)) >> 13) & 0x7fff); // exp 8-5 = 3, frac 23-10 bit -->  <<13 
