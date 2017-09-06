@@ -19,7 +19,7 @@ float half2float(const void *f16) {
 void float2half(void *f16, const float *f32) {
     unsigned int f32bin = *((const unsigned int *)f32);
     unsigned short *outshort = (unsigned short *)f16;
-    if (f32bin & 0x1000) f32bin += 1<<13; // round 0.5
+    f32bin += 1<<12; // round 0.5
     int exp = ((f32bin >> 13) & (0xff<<10)) - ((127-15)<<10);
     if (exp > (31<<10)) exp=31<<10; else if (exp < 0) exp=0;
     unsigned short f16bin = ((f32bin >> 16) & 0x8000) | exp | ((f32bin & 0x7fffff) >> 13); // exp 8-5 = 3, frac 23-10 bit -->  <<13 
