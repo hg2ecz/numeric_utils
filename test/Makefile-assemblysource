@@ -1,0 +1,29 @@
+CC=gcc
+CFLAGS =-Wall -O2
+#CFLAGS += -funroll-all-loops
+
+PARAMS_CPU = -march=native
+ifeq ($(shell uname -m), armv6l)
+    PARAMS_CPU = -march=native -mfp16-format=ieee
+else ifeq ($(shell uname -m), armv7l)
+    PARAMS_CPU = -mcpu=cortex-a5 -mfpu=neon-fp16 -mfp16-format=ieee
+#else ifeq ($(shell uname -m), aarch64)
+#    PARAMS_CPU = -march=native
+#else
+#    $(error "can't compile _HALF2FLOAT_TEST_, because only arm and aarch64 has __fp16 type")
+endif
+CFLAGS+= $(PARAMS_CPU)
+
+#LDFLAGS=-s
+#OBJS=cmplx_vectormul-neon-avx512f.o
+
+#TARGET=half2float-test
+
+
+
+all: $(OBJS)
+#	$(CC) $(OBJS) $(LDFLAGS) -o $(TARGET)
+	$(CC) $(CFLAGS) -S cmplx_vectormul-neon-avx512f.c
+
+clean:
+	rm -rf $(OBJS) $(TARGET) cmplx_vectormul-neon-avx512f.s

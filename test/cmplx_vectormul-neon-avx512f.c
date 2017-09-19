@@ -5,15 +5,16 @@
 #endif
 
 #if defined(__ARM_NEON)
-typedef float32x4_t VECTORTYPE; // 4 db parhuzamosan
+typedef float32x4_t VECTORTYPE; // 4 pcs parallel
+//typedef float16x8_t VECTORTYPE; // 8 pcs parallel float16 ieee754:2008
 #elif defined(__AVX512F__)
-typedef __v16sf VECTORTYPE; // 16 db parhuzamosan
+typedef __v16sf VECTORTYPE; // 16 pcs parallel
 #elif defined(__AVX__)
-typedef __v8sf VECTORTYPE; // 8 db parhuzamosan
+typedef __v8sf VECTORTYPE; // 8 pcs parallel
 #elif defined(__SSE__)
-typedef __m128 VECTORTYPE; // 4 db parhuzamosan
+typedef __m128 VECTORTYPE; // 4 pcs parallel
 #else
-typedef float VECTORTYPE; // 1 db
+typedef float VECTORTYPE; // single
 #endif
 
 
